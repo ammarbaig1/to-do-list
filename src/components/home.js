@@ -34,6 +34,12 @@ const Home = () => {
     document.getElementById("input").value = "";
   };
 
+  const del = (index) => {
+    const updatedItems = items.filter((item, i) => i !== index);
+    setItems(updatedItems);
+    localStorage.setItem("items", JSON.stringify(updatedItems));
+  };
+
   useEffect(() => {
     const storeditems = JSON.parse(localStorage.getItem("items"));
     if (storeditems) {
@@ -68,7 +74,12 @@ const Home = () => {
             className="mt-4 mx-8 bg-gray-200 p-3 flex justify-between items-center"
           >
             <p className="w-[80%]">{item}</p>
-            <button className="w-20 bg-gray-800 rounded-xl p-3 text-white">
+            <button
+              onClick={() => {
+                del(index);
+              }}
+              className="w-20 bg-gray-800 rounded-xl p-3 text-white"
+            >
               Delete
             </button>
             <button className="w-20 bg-gray-800 rounded-xl p-3 text-white">
