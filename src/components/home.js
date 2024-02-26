@@ -21,6 +21,8 @@ import { useState } from "react";
 
 const Home = () => {
   const [items, setItems] = useState([]);
+  const input = document.getElementById("input");
+  const [editValue, setEditValue] = useState([input]);
 
   const add = () => {
     const input = document.getElementById("input").value;
@@ -33,6 +35,20 @@ const Home = () => {
   const clearinputfield = () => {
     document.getElementById("input").value = "";
   };
+  const edit = (index) => {
+    const Items = JSON.parse(localStorage.getItem("items"));
+    const filt = Items.filter((element, i) => {
+      return i === index;
+    });
+    const editItem = filt;
+    setEditValue(editItem);
+    document.getElementById("input").value = editItem;
+  };
+
+  const save = () => {
+    // const saveValue = document.getElementById("input").value;
+    // const localS = JSON.parse(localStorage.getItem("items"));
+  };
 
   const del = (index) => {
     const updatedItems = items.filter((item, i) => i !== index);
@@ -40,12 +56,12 @@ const Home = () => {
     localStorage.setItem("items", JSON.stringify(updatedItems));
   };
 
-  useEffect(() => {
-    const storeditems = JSON.parse(localStorage.getItem("items"));
-    if (storeditems) {
-      setItems(storeditems);
-    }
-  });
+  // useEffect(() => {
+  //   const storeditems = JSON.parse(localStorage.getItem("items"));
+  //   if (storeditems) {
+  //     setItems(storeditems);
+  //   }
+  // });
 
   return (
     <>
@@ -59,12 +75,20 @@ const Home = () => {
           placeholder="Add Item"
           //   onchange={togglechange}
         ></input>
-        <button
-          onClick={add}
-          className="mt-4 w-20 bg-gray-800 rounded-xl p-3 text-white"
-        >
-          ADD
-        </button>
+        <div className="flex space-x-4">
+          <button
+            onClick={add}
+            className="mt-4 w-20 bg-gray-800 rounded-xl p-3 text-white"
+          >
+            ADD
+          </button>
+          <button
+            onClick={save}
+            className="mt-4 w-20 bg-gray-800 rounded-xl p-3 text-white"
+          >
+            SAVE
+          </button>
+        </div>
       </div>
 
       <div>
@@ -82,7 +106,12 @@ const Home = () => {
             >
               Delete
             </button>
-            <button className="w-20 bg-gray-800 rounded-xl p-3 text-white">
+            <button
+              onClick={() => {
+                edit(index);
+              }}
+              className="w-20 bg-gray-800 rounded-xl p-3 text-white"
+            >
               Edit
             </button>
           </div>
