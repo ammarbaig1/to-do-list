@@ -1,24 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-// const togglechange = () => {
-//   const inputvalue = localStorage.getItem("inputvalue");
-//   document.getElementById("entry").textContent = inputvalue;
-//   clearinputfield();
-// };
-
-// const add = () => {
-//   const input = document.getElementById("input").value;
-//   localStorage.setItem("inputvalue", input);
-//   togglechange();
-// };
-
-// const clearinputfield = () => {
-//   document.getElementById("input").value = "";
-// };
-
-// const items = ["Item 1", "Item 2", "Item 3"];
-
 const Home = () => {
   const [items, setItems] = useState([]);
   const input = document.getElementById("input");
@@ -35,19 +17,28 @@ const Home = () => {
   const clearinputfield = () => {
     document.getElementById("input").value = "";
   };
+
   const edit = (index) => {
     const Items = JSON.parse(localStorage.getItem("items"));
     const filt = Items.filter((element, i) => {
       return i === index;
     });
-    const editItem = filt;
-    setEditValue(editItem);
+    const editItem = filt[0];
+    console.log("editItem:", editItem);
+    setEditValue(index);
     document.getElementById("input").value = editItem;
   };
 
   const save = () => {
-    // const saveValue = document.getElementById("input").value;
-    // const localS = JSON.parse(localStorage.getItem("items"));
+    const editedValue = document.getElementById("input").value;
+    const updatedItems = items.map((item, index) => {
+      if (index === editValue) {
+        return editedValue;
+      }
+      return item;
+    });
+    setItems(updatedItems);
+    localStorage.setItem("items", JSON.stringify(updatedItems));
   };
 
   const del = (index) => {
@@ -55,13 +46,6 @@ const Home = () => {
     setItems(updatedItems);
     localStorage.setItem("items", JSON.stringify(updatedItems));
   };
-
-  // useEffect(() => {
-  //   const storeditems = JSON.parse(localStorage.getItem("items"));
-  //   if (storeditems) {
-  //     setItems(storeditems);
-  //   }
-  // });
 
   return (
     <>
@@ -73,7 +57,6 @@ const Home = () => {
           id="input"
           className="w-full border-[1px] p-3 border-black"
           placeholder="Add Item"
-          //   onchange={togglechange}
         ></input>
         <div className="flex space-x-4">
           <button
