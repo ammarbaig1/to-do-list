@@ -39,6 +39,7 @@ const Home = () => {
     });
     setItems(updatedItems);
     localStorage.setItem("items", JSON.stringify(updatedItems));
+    clearinputfield();
   };
 
   const del = (index) => {
