@@ -3,16 +3,21 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
-import Login from "./pages/login";
+import { Login, Context } from "./pages/login";
+
 function App() {
+  const userId = localStorage.getItem("id");
+  // console.log("app.js", userId);
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route exact path="/home" element={<Home />} />
-        </Routes>
-      </Router>
+      <Context.Provider value={userId}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route exact path="/home" element={<Home />} />
+          </Routes>
+        </Router>
+      </Context.Provider>
     </>
   );
 }
