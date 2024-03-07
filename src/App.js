@@ -4,6 +4,8 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Form from "./pages/form";
+import FormTwo from "./pages/formTwo";
+
 import { Login, Context } from "./pages/login";
 
 function App() {
@@ -17,11 +19,10 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/form" element={<Form />} />
-            
+            <Route exact path="/form-two" element={<FormTwo />} />
           </Routes>
         </Router>
       </Context.Provider>
-      
     </>
   );
 }
