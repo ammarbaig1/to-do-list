@@ -11,10 +11,16 @@ const Home = () => {
 
   const add = () => {
     const input = document.getElementById("input").value;
-    const newItems = [...items, input];
-    setItems(newItems);
-    localStorage.setItem("items", JSON.stringify(newItems));
-    clearinputfield();
+
+    if (input === "") {
+      alert("Please fill the content");
+    } else {
+      const input = document.getElementById("input").value;
+      const newItems = [...items, input];
+      setItems(newItems);
+      localStorage.setItem("items", JSON.stringify(newItems));
+      clearinputfield();
+    }
   };
 
   const clearinputfield = () => {
@@ -83,29 +89,34 @@ const Home = () => {
           </div>
         </div>
 
-        <div>
+        <div className="flex flex-wrap ">
           {items.map((item, index) => (
             <div
               key={index}
-              className="mt-4 mx-8 bg-gray-200 p-3 flex justify-between items-center"
+              className="mt-4 mx-8 bg-gray-200 p-3 rounded-xl shadow-xl"
+              style={{ width: "33%" }}
+              // style={{ width: "calc(25% - 16px)" }}
             >
-              <p className="w-[80%]">{item}</p>
-              <button
-                onClick={() => {
-                  del(index);
-                }}
-                className="w-20 bg-gray-800 rounded-xl p-3 text-white"
-              >
-                Delete
-              </button>
-              <button
-                onClick={() => {
-                  edit(index);
-                }}
-                className="w-20 bg-gray-800 rounded-xl p-3 text-white"
-              >
-                Edit
-              </button>
+              <div className="flex justify-end my-3">
+                <div
+                  className="w-8"
+                  onClick={() => {
+                    del(index);
+                  }}
+                >
+                  <img className="w-100 h-100" src="deletebtn.png"></img>
+                </div>
+
+                <div
+                  className="w-8 ml-8 mr-4"
+                  onClick={() => {
+                    edit(index);
+                  }}
+                >
+                  <img className="w-100 h-100" src="editbtn.png"></img>
+                </div>
+              </div>
+              <p className="w-100">{item}</p>
             </div>
           ))}
         </div>
